@@ -1,13 +1,13 @@
 # Maintainer: Ben Alex <ben.alex@acegi.com.au>
 
-# See https://github.com/benalexau/ibcontroller-aur for documentation.
+# Using GitHub as upstream URL instead of IBController, as GitHub has lots of docs on usage to assist users.
 
 pkgname=ib-controller
 pkgver=2.11
-pkgrel=1
+pkgrel=2
 pkgdesc='Manages headless Interactive Brokers IB Gateway instances'
 arch=('any')
-url="http://sourceforge.net/projects/ibcontroller/"
+url="https://github.com/benalexau/ibcontroller-aur"
 license=('GPL3')
 depends=(ib-tws xorg-server-xvfb)
 noextract=('ibcontroller-2.11.20140324.jar')
