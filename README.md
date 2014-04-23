@@ -78,6 +78,6 @@ sudo systemctl daemon-reload
 sudo systemctl start ibcontroller@fdemo.service
 sudo systemctl status ibcontroller@fdemo.service
 sudo systemctl stop ibcontroller@fdemo.service
-makepkg --source
+rm -f *.gz && makepkg --source
 burp -c office *.gz
 ````
