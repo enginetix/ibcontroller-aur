@@ -9,14 +9,17 @@ This package depends on
 [Trader Workstation](http://www.interactivebrokers.com/en/pagemap/pagemap_APISolutions.php)
 having been installed via AUR package
 [ib-tws](https://aur.archlinux.org/packages/ib-tws/). It installs a custom build
-of IBController and a headless systemd configuration that supports multiple
-concurrent IB Gateway instances while addressing usual security needs.
+of IBController and a headless 
+[systemd](http://en.wikipedia.org/wiki/Systemd) configuration that supports
+multiple concurrent IB Gateway instances while addressing usual security needs.
 
 To start IBController and the IB Gateway it manages, create an INI file in
 ``/etc/ibcontroller`` and use systemd commands such as:
 
-```sudo systemctl start ibcontroller@ininame.service
-sudo systemctl enable ibcontroller@ininame.service```
+```
+sudo systemctl start ibcontroller@ininame.service
+sudo systemctl enable ibcontroller@ininame.service
+```
 
 The aforementioned ``ininame`` should be the simple name of an ``/etc/ibcontroller``
 INI file. For example, use ``ibcontroller@fdemo.service`` for the included
@@ -35,7 +38,7 @@ Limitations
 Systemd recommends
 [sd_notify](http://www.freedesktop.org/software/systemd/man/sd_notify.html)
 calls for its watchdog process monitoring and to determine when a process has
-fully loaded and other dependent processes can therefore be started.
+fully loaded.
 
 IBController and IB Gateway are written in Java. I was unable to locate an
 ``sd_notify`` library for the JVM at this time. If one becomes available, please
@@ -48,7 +51,16 @@ you should always expect some service disconnections.
 Security
 --------
 Always ensure the ``/etc/ibcontroller`` INI files are only readable by ``root``,
-as they contain your IB credentials.
+as they contain your IB credentials. If you require additional credential safety
+you may like to consider the IBController ``PasswordEncrypted`` option, however
+it is easily decrypted and therefore not used in the sample files.
+
+There is no mechanism to use IB hardware security tokens with the systemd
+configuration. This is due to the systemd configuration using a virtual
+framebuffer, so there is no mechanism by which hardware challenges can be
+presented. If you have a hardware token, you can disable it for trading system
+access via IB Account Management. Alternately you may like to create a new user
+account under your IB account which has trading access but no hardware token.
 
 Only 127.0.0.1 is trusted by the resulting IB Gateway instance. Port forwarding
 (eg iptables, SSH tunneling) is suggested if other IP addresses are required.
@@ -57,13 +69,15 @@ Build and Test
 --------------
 If you'd like to try out changes to the package, these commands offer a start:
 
-   cd package
-   rm -rf pkg src && makepkg -f
-   namcap -m *.xz
-   sudo pacman -U *.xz
-   sudo systemctl daemon-reload
-   sudo systemctl start ibcontroller@fdemo.service
-   sudo systemctl status ibcontroller@fdemo.service
-   sudo systemctl stop ibcontroller@fdemo.service
-   makepkg --source
-   burp -c office *.gz
+````
+cd package
+rm -rf pkg src && makepkg -f
+namcap -m *.xz
+sudo pacman -U *.xz
+sudo systemctl daemon-reload
+sudo systemctl start ibcontroller@fdemo.service
+sudo systemctl status ibcontroller@fdemo.service
+sudo systemctl stop ibcontroller@fdemo.service
+makepkg --source
+burp -c office *.gz
+````
