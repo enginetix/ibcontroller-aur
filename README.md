@@ -81,5 +81,5 @@ sudo systemctl start ibcontroller@fdemo.service
 sudo systemctl status ibcontroller@fdemo.service
 sudo systemctl stop ibcontroller@fdemo.service
 rm -f *.gz && makepkg --source
-burp -c office *.gz
+burp -c daemons *.gz
 ````
