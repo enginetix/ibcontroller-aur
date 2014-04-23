@@ -26,7 +26,9 @@ INI file. For example, use ``ibcontroller@fdemo.service`` for the included
 [financial advisor sample INI file](package/fdemo.ini),
 or ``ibcontroller@edemo.service`` for the included
 [individual user sample INI file](package/edemo.ini). Both sample INI files can
-be used concurrently, as they bind to unique ports.
+be used concurrently, as they bind to unique ports. Please refer to the
+[IBController](http://sourceforge.net/projects/ibcontroller/) documentation for
+the meaning of individual INI configuration settings.
 
 Please note future updates to this package may change the sample INI files to
 reflect new configuration defaults. You should create your own
