@@ -2,7 +2,7 @@ IBController AUR
 =================
 Source and documentation for the
 [Interactive Brokers](http://interactivebrokers.com/)
-[IBController](http://sourceforge.net/projects/ibcontroller/)
+[IBController](https://github.com/ib-controller/ib-controller)
 AUR package [ib-controller](https://aur.archlinux.org/packages/ib-controller/).
 
 This package depends on
@@ -27,7 +27,7 @@ INI file. For example, use ``ibcontroller@fdemo.service`` for the included
 or ``ibcontroller@edemo.service`` for the included
 [individual user sample INI file](package/edemo.ini). Both sample INI files can
 be used concurrently, as they bind to unique ports. Please refer to the
-[IBController](http://sourceforge.net/projects/ibcontroller/) documentation for
+[IBController](https://github.com/ib-controller/ib-controller) documentation for
 the meaning of individual INI configuration settings.
 
 Please note future updates to this package may change the sample INI files to
