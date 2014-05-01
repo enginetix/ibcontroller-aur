@@ -1,13 +1,12 @@
 IBController AUR
 =================
 Source and documentation for the
-[Interactive Brokers](http://interactivebrokers.com/)
 [IBController](https://github.com/ib-controller/ib-controller)
 AUR package [ib-controller](https://aur.archlinux.org/packages/ib-controller/).
+This allows you to control [Interactive Brokers](http://interactivebrokers.com/)
+[Trader Workstation](http://www.interactivebrokers.com/en/pagemap/pagemap_APISolutions.php).
 
-This package depends on
-[Trader Workstation](http://www.interactivebrokers.com/en/pagemap/pagemap_APISolutions.php)
-having been installed via AUR package
+This package depends on Trader Workstation having been installed via AUR package
 [ib-tws](https://aur.archlinux.org/packages/ib-tws/). It installs a custom build
 of IBController and a headless 
 [systemd](http://en.wikipedia.org/wiki/Systemd) configuration that supports
