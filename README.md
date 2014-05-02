@@ -34,20 +34,49 @@ reflect new configuration defaults. You should create your own
 INI file(s) rather than editing one of the shipped INI files. Similarly the
 systemd configuration file may be changed in future updates.
 
-Limitations
------------
-Systemd recommends
-[sd_notify](http://www.freedesktop.org/software/systemd/man/sd_notify.html)
-calls for its watchdog process monitoring and to determine when a process has
-fully loaded.
+Monitoring
+----------
+If you'd like to monitor your IBController is running and IB API is available,
+[Monit](http://mmonit.com/monit/) is recommended. It's easily installed with
+``sudo pacman -S monit``. Edit the ``/etc/monitrc`` file and add lines like:
 
-IBController and IB Gateway are written in Java. I was unable to locate an
-``sd_notify`` library for the JVM at this time. If one becomes available, please
-contribute this improvement to IBController so there is more comprehensive
-systemd integration. In the interim you should have your trading systems detect
-the unavailability of IB Gateway and report it via an application-specific
-mechanism. Please also remember IB performs a daily restart of its servers, so
-you should always expect some service disconnections.
+```
+set daemon 15
+set mailserver mail.someisp.com
+set alert you@you.com not on { instance, action }
+
+check process ib-api-fdemo matching 'xvfb.*java.*fdemo.ini'
+  start program = "/usr/sbin/systemctl start ibcontroller@fdemo.service"
+  stop program = "/usr/sbin/systemctl start ibcontroller@fdemo.service"
+  if failed host 127.0.0.1 port 4002
+    send "63\0x0071\0x001\0x005556\0x00" # clientVer\startAPI\startApiVer\5556
+    expect "[0-9]{2,}"                   # serverVer reply
+    send "49\0x001\0x00"                 # reqCurrTime\reqCurrTimeVer
+    expect "49"                          # serverTime reply
+  then restart
+```
+
+In the above:
+
+* The ``daemon`` statement causes service monitoring every 15 seconds.
+* The ``matching`` regular expression detects the ``fdemo.ini`` IBController
+  process. Monit will then report additional  statistics in the Monit interface
+  (eg CPU/RAM use) plus detect if the process is not running.
+* The ``if failed host`` check on port ``4002`` performs an IB API connection
+  handshake and requests the server time. This offers confidence IB API is
+  running.
+* The ``restart`` directive will both restart the service and send an email if
+  there is any issue detected.
+
+Don't forget you'll need to start Monit after editing the ``/etc/monitrc``:
+
+```
+sudo systemctl start monit
+sudo systemctl enable monit
+```
+
+You can use [http://localhost:2812/](http://localhost:2812/) (default username
+``admin``, password ``monit``) to access the Monit GUI.
 
 Security
 --------
