@@ -47,7 +47,7 @@ set alert you@you.com not on { instance, action }
 
 check process ib-api-fdemo matching 'xvfb.*java.*fdemo.ini'
   start program = "/usr/sbin/systemctl start ibcontroller@fdemo.service"
-  stop program = "/usr/sbin/systemctl start ibcontroller@fdemo.service"
+  stop program = "/usr/sbin/systemctl stop ibcontroller@fdemo.service"
   if failed host 127.0.0.1 port 4002
     send "63\0x0071\0x001\0x005556\0x00" # clientVer\startAPI\startApiVer\5556
     expect "[0-9]{2,}"                   # serverVer reply
