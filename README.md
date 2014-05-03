@@ -41,7 +41,7 @@ If you'd like to monitor your IBController is running and IB API is available,
 ``sudo pacman -S monit``. Edit the ``/etc/monitrc`` file and add lines like:
 
 ```
-set daemon 15
+set daemon 60
 set mailserver mail.someisp.com
 set alert you@you.com not on { instance, action }
 
@@ -58,7 +58,7 @@ check process ib-api-fdemo matching 'xvfb.*java.*fdemo.ini'
 
 In the above:
 
-* The ``daemon`` statement causes service monitoring every 15 seconds.
+* The ``daemon`` statement causes service monitoring every 60 seconds.
 * The ``matching`` regular expression detects the ``fdemo.ini`` IBController
   process. Monit will then report additional  statistics in the Monit interface
   (eg CPU/RAM use) plus detect if the process is not running.
