@@ -8,7 +8,7 @@ This allows you to control [Interactive Brokers](http://interactivebrokers.com/)
 
 This package depends on Trader Workstation having been installed via AUR package
 [ib-tws](https://aur.archlinux.org/packages/ib-tws/). It installs a custom build
-of IBController and a headless 
+of IBController and a headless
 [systemd](http://en.wikipedia.org/wiki/Systemd) configuration that supports
 multiple concurrent IB Gateway instances while addressing usual security needs.
 
@@ -108,6 +108,6 @@ sudo systemctl daemon-reload
 sudo systemctl start ibcontroller@fdemo.service
 sudo systemctl status ibcontroller@fdemo.service
 sudo systemctl stop ibcontroller@fdemo.service
-rm -f *.gz && makepkg --source
+rm -f *.gz && mkaurball
 burp -c daemons *.gz
 ````
