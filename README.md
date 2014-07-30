@@ -101,7 +101,7 @@ If you'd like to try out changes to the package, these commands offer a start:
 
 ````
 cd package
-rm -rf pkg src && makepkg -f
+rm -rf pkg src *.xz *.gz && makepkg -f
 namcap -m *.xz
 sudo pacman -U *.xz
 sudo systemctl daemon-reload
